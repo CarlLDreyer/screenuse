@@ -5,78 +5,92 @@
 <script>
 const THREE = require('three')
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 export default {
   name: 'ObjectCanvas',
+  static () {
+    return {
+      camera: null,
+      canvas: null,
+      scene: null,
+      ambientLight: null,
+      pointLight: null,
+      loader: null,
+      dracoLoader: null,
+      renderer: null,
+    }
+  },
 
   mounted () {
-    this.loadObj()
+    this.init()
+  },
+
+  created () {
+    window.addEventListener( 'resize', this.onWindowResize, false )
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onWindowResize)
   },
 
   methods: {
-    loadObj() {
-      let canvas = document.getElementById('objectCanvas')
-      let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 2000)
+    init() {
+      this.canvas = document.getElementById('objectCanvas')
+      this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20)
+      this.adjustCamera()
 
+      this.scene = new THREE.Scene()
+      this.ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.9, 100)
+      this.pointLight = new THREE.PointLight(0xFFFFFF, 0.6, 100)
+      this.pointLight.position.set(0, 0, 25)
+      this.scene.add(this.ambientLight)
+      this.camera.add(this.pointLight)
+      this.scene.add(this.camera)
+
+      this.loader = new GLTFLoader()
+      this.dracoLoader = new DRACOLoader()
+      this.dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/')
+      this.loader.setDRACOLoader(this.dracoLoader)
+      this.loader.load('/models/model.gltf', (gltf) => {
+        // this.gltf = gltf
+        gltf.scene.scale.multiplyScalar(1 / 4.5)
+        gltf.scene.position.x = -1
+        this.scene.add(gltf.scene)
+        
+        const animate = () => {
+          requestAnimationFrame(animate)  
+          gltf.scene.rotation.y  += 0.002
+          this.render()
+        }
+        animate()
+      })
+      this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+      this.renderer.setPixelRatio(window.devicePixelRatio)
+      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      this.renderer.outputEncoding = THREE.sRGBEncoding
+      this.canvas.appendChild( this.renderer.domElement )
+
+      let pmremGenerator = new THREE.PMREMGenerator(this.renderer)
+      pmremGenerator.compileEquirectangularShader()
+    },
+    onWindowResize () { 
+      this.camera.aspect = window.innerWidth / window.innerHeight
+      this.adjustCamera()
+      this.renderer.setSize(window.innerWidth, window.innerHeight)   
+    },
+    render () {
+      this.renderer.render( this.scene, this.camera )
+    },
+    adjustCamera () {
       if (window.innerWidth <= 1024) {
-        camera.position.set(-1.55, 0.6, 3)
+        this.camera.position.set( -1, 0.95, 2.7)
+        this.camera.fov = 60
       }
       else {
-        camera.position.set(-2.5, 0.6, 3)
+        this.camera.position.set( - 1.8, 0.47, 2.7)
+        this.camera.fov = 40
       }
-
-      // Scene
-      let scene = new THREE.Scene()
-
-      let ambientLight = new THREE.AmbientLight(0xcccccc, 0.4)
-      scene.add(ambientLight)
-
-      let pointLight = new THREE.PointLight(0xffffff, 0.8)
-      camera.add(pointLight)
-      scene.add(camera)
-
-      new GLTFLoader()
-        .setPath('models/')
-        .load('screenTimeTest.glb', (gltf) => {
-          gltf.scene.scale.multiplyScalar(1 / 3.2)
-          gltf.scene.position.x = -1.6
-          gltf.scene.rotation.y = 3
-          
-          scene.add(gltf.scene)
-          let animate = () => {
-            requestAnimationFrame( animate )
-            gltf.scene.rotation.y  += 0.002
-            render()
-          }
-          animate()
-
-            render()
-        })
-
-      let renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
-      renderer.setPixelRatio(window.devicePixelRatio)
-      // renderer.setSize(canvas.offsetWidth, canvas.offsetHeight, false)
-      renderer.setSize(window.innerWidth, window.innerHeight, false)
-      renderer.toneMapping = THREE.ACESFilmicToneMapping
-      renderer.toneMappingExposure = 1
-      renderer.outputEncoding = THREE.sRGBEncoding
-      canvas.appendChild( renderer.domElement )
-
-      var pmremGenerator = new THREE.PMREMGenerator( renderer )
-      pmremGenerator.compileEquirectangularShader()
-
-      let onWindowResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight
-        camera.updateProjectionMatrix()
-        // renderer.setPixelRatio(window.devicePixelRatio)
-        renderer.setSize(window.innerWidth, window.innerHeight)
-      }
-
-      window.addEventListener( 'resize', onWindowResize, false )
-
-      let render = () => {
-				renderer.render( scene, camera )
-      }
-
+      this.camera.updateProjectionMatrix()
     },
   },
 
@@ -88,5 +102,6 @@ export default {
   height: 100%;
   display: flex;
   width: 100%;
+  z-index: 2020;
 }
 </style>
