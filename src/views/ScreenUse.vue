@@ -1,12 +1,12 @@
 <template>
-  <section id="screen-use">
+  <div id="screen-use">
     <div id="wave" />
       <div id="text">
         <div id="container">
           <span id="small">Har du koll på din</span>
           <span id="header" class="text">Skärmtid?</span>
           <span id="desc" class="text">Problemet är inte att vi har lite tid, utan att vi slösar bort en stor del av tiden vi har. Hur spenderar du din tid?</span>
-          <button id="start-btn">
+          <button id="start-btn" @click="handleClick">
             STARTA QUIZ
             <span id="btn-icon">
               <svg viewBox="0 0 24 24"><use xlink:href="#arrow" /></svg>
@@ -22,7 +22,7 @@
         </g>
       </defs>
     </svg>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -32,7 +32,13 @@ export default {
 
   components: {
     ObjectCanvas,
-  }
+  },
+
+  methods: {
+    handleClick () {
+      this.$router.push('quiz')
+    },
+  },
 
 }
 </script>
@@ -45,24 +51,6 @@ export default {
   
   @media (max-width: 1024px) {
     flex-direction: column-reverse;
-  }
-  #wave {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background: url('/img/yes.svg');
-    background-size: 70%;
-    background-repeat: no-repeat;
-    top: 0;
-
-    @media (max-width: 1024px) {
-      background-size: 675px;
-    }
-    z-index: 0;
-    img {
-      height: 100%;
-      width: 100%;
-    }
   }
   #text {
     display: flex;
@@ -80,7 +68,6 @@ export default {
       justify-content: flex-start;
     }
     #container {
-      font-family: 'Assistant', sans-serif;
       flex-direction: column;
       display: inherit;
       justify-content: flex-start;
@@ -94,6 +81,7 @@ export default {
       #small {
         font-size: 20px;
         color: #06071B;
+        font-weight: 600;
 
         @media (max-width: 1024px) {
           font-size: 16px;
@@ -113,8 +101,8 @@ export default {
       #desc {
         font-size: 16px;
         margin: 0 0 16px 0;
-        color: #555;
-        line-height: 1.4;
+        color:#545454;
+        line-height: 1.2;
         font-weight: 600;
         max-width: 90%;
 
@@ -138,20 +126,31 @@ export default {
         justify-content: center;
         border: none;
         font-size: 18px;
-        font-weight: 700;
+        font-weight: 600;
         cursor: pointer;
         max-width: 190px;
         padding: 0;
-        letter-spacing: 1px;
+        letter-spacing: 0.6px;
+        color: #333;
+        transition: all .2s ease;
+        &:hover {
+          // letter-spacing: 1px;
+          color: rgb(176,110,202);
+          #btn-icon {
+            transform: translateX(5px);
+          }
+        }
         #btn-icon {
           display: flex;
           justify-content: center;
           align-items: center;
-          background: #9D7BFC;
+          background: rgb(176,110,202);
+          background: linear-gradient(129deg, rgba(176,110,202,1) 0%, rgba(202,125,232,1) 100%);
           border-radius: 50%;
           height: 40px;
           width: 40px;
           margin: 0 0 0 16px;
+          transition: all .2s ease;
           svg {
             height: 18px;
             width: 18px;

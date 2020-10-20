@@ -1,12 +1,20 @@
 <template>
   <div id="app">
-    <router-view/>
+    <Loader />
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
+import Loader from '@/components/Loader'
 export default {
   name: 'App',
+
+  components: {
+    Loader
+  },
 }
 </script>
 

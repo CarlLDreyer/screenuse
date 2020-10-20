@@ -6,6 +6,7 @@
 const THREE = require('three')
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
+import { mapActions } from 'vuex'
 export default {
   name: 'ObjectCanvas',
   static () {
@@ -34,6 +35,9 @@ export default {
   },
 
   methods: {
+    ...mapActions([
+      'setLoaded',
+    ]),
     init() {
       this.canvas = document.getElementById('objectCanvas')
       this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20)
@@ -52,7 +56,6 @@ export default {
       this.dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/')
       this.loader.setDRACOLoader(this.dracoLoader)
       this.loader.load('/models/model.gltf', (gltf) => {
-        // this.gltf = gltf
         gltf.scene.scale.multiplyScalar(1 / 4.5)
         gltf.scene.position.x = -1
         this.scene.add(gltf.scene)
@@ -63,7 +66,7 @@ export default {
           this.render()
         }
         animate()
-      })
+      }, this.onLoad)
       this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
       this.renderer.setPixelRatio(window.devicePixelRatio)
       this.renderer.setSize(window.innerWidth, window.innerHeight)
@@ -91,6 +94,11 @@ export default {
         this.camera.fov = 40
       }
       this.camera.updateProjectionMatrix()
+    },
+    onLoad () {
+      setTimeout(() => {
+        this.setLoaded(true)
+      }, 1500)
     },
   },
 

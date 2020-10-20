@@ -9,6 +9,11 @@ const routes = [
     name: 'ScreenUse',
     component: () => import(/* webpackChunkName: "about" */ '../views/ScreenUse.vue')
   },
+  {
+    path: '/quiz',
+    name: 'Quiz',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Quiz.vue')
+  }
 ]
 
 const router = new VueRouter({
