@@ -9,6 +9,11 @@
 
 <script>
 import QuizTimeEstimate from '@/components/QuizStages/QuizTimeEstimate'
+import QuizPhoneBehavior from '@/components/QuizStages/QuizPhoneBehavior'
+import QuizWellbeing from '@/components/QuizStages/QuizWellbeing'
+import QuizPhoneUsage from '@/components/QuizStages/QuizPhoneUsage'
+import QuizExercise from '@/components/QuizStages/QuizExercise'
+import QuizActualTime from '@/components/QuizStages/QuizActualTime'
 import { mapGetters } from 'vuex'
 export default {
   name: 'Quiz',
@@ -21,14 +26,23 @@ export default {
     quizStage () {
       const quizComponents = [
         'QuizTimeEstimate',
-        'QuizNextShit'
+        'QuizPhoneBehavior',
+        'QuizWellbeing',
+        'QuizPhoneUsage',
+        'QuizExercise',
+        'QuizActualTime',
       ]
       return quizComponents[this.currentQuizStage]
     },
   },
 
   components: {
-    QuizTimeEstimate
+    QuizTimeEstimate,
+    QuizPhoneBehavior,
+    QuizWellbeing,
+    QuizPhoneUsage,
+    QuizExercise,
+    QuizActualTime,
   },
 }
 </script>

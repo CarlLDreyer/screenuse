@@ -1,14 +1,9 @@
 <template>
   <QuizLayout :title="title" :subtitle="subtitle">
     <template #content>
-      <!-- <VueSlider
-        :value="estimatedTime"
-        @input="setEstimatedTime($event.target.value)"
-        @change="setEstimatedTime($event.target.value)"
-      /> -->
       <span class="time-text">{{ estimatedTime }}h</span>
       <vue-slider
-        v-model="fuck"
+        v-model="timeModel"
         :height="18"
         :min="0"
         :max="12"
@@ -19,11 +14,15 @@
         </template>
       </vue-slider>
     </template>
+    <template #footer>
+      <NextButton />
+    </template>
   </QuizLayout>
 </template>
 
 <script>
 import QuizLayout from '@/layouts/QuizLayout'
+import NextButton from '@/components/NextButton'
 import { mapGetters, mapActions } from 'vuex'
 import VueSlider from 'vue-slider-component'
 import '@/assets/styles/slider.scss'
@@ -43,14 +42,14 @@ export default {
     ...mapGetters([
       'estimatedTime',
     ]),
-    fuck: {
+    timeModel: {
       get () {
         return this.estimatedTime
       },
       set (value) {
         this.setEstimatedTime(value)
-      }
-    }
+      },
+    },
   },
 
   methods: {
@@ -62,6 +61,7 @@ export default {
   components: {
     QuizLayout,
     VueSlider,
+    NextButton,
   },
 }
 </script>
