@@ -12,21 +12,6 @@
           <span class="text">{{ box.title }}</span>
         </div>
       </div>
-      <!-- <div class="checkboxes">
-        <div
-          class="checkbox"
-          v-for="box in phoneBehavior"
-          :key="box.id"
-          @click="handleClick(box)"
-          :class="{selected: box.selected}"
-        >
-          <span class="text">{{ box.text }}</span>
-          <span class="active-box" v-if="box.selected">
-            <svg viewBox="0 0 24 24" class="check"><use xlink:href="#check" /></svg>
-          </span>
-          <span class="empty-box" v-else />
-        </div>
-      </div> -->
       <svg style="display:none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
           <g id="check">
@@ -84,13 +69,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .quiz-container {
-  max-width: 600px;
+::v-deep .quiz-body {
+  align-items: center;
 }
 .boxes {
-  margin: 32px 0 0 0;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 540px;
+
   .box {
     background: rgb(255,255,255);
     background: linear-gradient(101deg, rgba(255,255,255,1) 0%, rgba(229,237,252,1) 175%);
@@ -101,9 +88,8 @@ export default {
     justify-content: center;
     border-radius: 4px;
     font-size: 18px;
-    padding: 22px 24px;
-    margin: 4px;
-    color: #06071b;
+    padding: 19.5px 24px;
+    margin: 2px;
     
     &.selected {
       color: white;
@@ -111,9 +97,9 @@ export default {
       background: linear-gradient(101deg, rgba(202,125,232,1) 0%, rgba(236,203,245,1) 175%);
     }
 
-    @media (max-width: 780px) {
-      font-size: 18px;
-      padding: 16px 16px;
+    @media (max-width: 600px) {
+      font-size: 16px;
+      padding: 16px;
     }
     .text {
       font-weight: 600;

@@ -1,13 +1,4 @@
 /* component style */
-.vue-slider {
-  margin-top: 32px;
-}
-
-@media (max-width: 768px) {
-  .vue-slider {
-    padding: 7px 24px !important;
-  }
-}
 .vue-slider-disabled {
   opacity: 0.5;
   cursor: not-allowed;

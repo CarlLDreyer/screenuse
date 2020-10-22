@@ -1,11 +1,23 @@
 <template>
   <QuizLayout :title="title" :subtitle="subtitle">
     <template #content>
-      <div class="actual-time">
-        <input type="tel" v-mask="'##'" v-model="hoursModel" placeholder="0" dir="rtl" />
-        <span class="text hour">h</span>
-        <input type="tel" v-mask="'##'" v-model="minutesModel" placeholder="0" dir="rtl" />
-        <span class="text">min</span>
+      <div class="actual-time-wrapper">
+        <div class="actual-time">
+          <div class="hours-wrapper">
+            <span class="text">Timmar</span>
+            <div class="hours">
+              <input type="tel" v-mask="'##'" v-model="hoursModel" placeholder="0" />
+            </div>
+          </div>
+          <span class="colon">:</span>
+          <div class="minutes-wrapper">
+            <span class="text">Minuter</span>
+            <div class="minutes">
+              <input type="tel" v-mask="'##'" v-model="minutesModel" placeholder="0" />
+            </div>
+          </div>
+        </div>
+        <span class="guide">{{ guide }}</span>
       </div>
     </template>
     <template #footer>
@@ -25,24 +37,19 @@ export default {
   name: 'QuizActualTime',
 
   watch: {
-    hoursModel (newHours, oldHours) {
-      const newHoursInt = parseInt(newHours)
-      const oldHoursInt = parseInt(oldHours)
-      if (newHoursInt > 24 && oldHoursInt < 24) this.hours = oldHours
+    hoursModel (newValue, oldValue) {
+      if (newValue > 24 && oldValue < 24) this.setActualHours(oldValue)
     },
-    minutesModel (newMinutes, oldMinutes) {
-      const newMinutesInt = parseInt(newMinutes)
-      const oldMinutesInt = parseInt(oldMinutes)
-      if (newMinutesInt > 60 && oldMinutesInt < 60) this.minutes = oldMinutes
-    }
+    minutesModel (newValue, oldValue) {
+      if (newValue > 59 && oldValue < 59) this.setActualMinutes(oldValue)
+    },
   },
 
   data () {
     return {
       title: 'Vad är din faktiska skärmtid?',
       subtitle: 'Skriv in ditt dagliga genomsnitt per dag från förra veckan',
-      hours: 0,
-      minutes: 0,
+      guide: 'Hur hittar jag min skärmtid?'
     }
   },
 
@@ -51,6 +58,10 @@ export default {
       'setActualHours',
       'setActualMinutes',
     ]),
+    handleKeypress (evt) {
+      const value = evt.value
+      console.log('key pressed', value)
+    }
   },
 
   computed: {
@@ -71,7 +82,7 @@ export default {
         return this.actualMinutes
       },
       set (value) {
-        this.setActualMinutes (value)
+        this.setActualMinutes(value)
       }
     },
     canProceed () {
@@ -92,30 +103,74 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .quiz-body {
+  align-items: center;
+}
 .actual-time {
   display: flex;
-  justify-content: center;
-  align-items: baseline;
-  background: white;
-  padding: 32px 16px;
-  margin: 32px 0 0 0;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  .text {
-    user-select: none;
-    font-size: 54px;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  align-items: center;
+  margin: 0 0 24px 0;
+
+  @media (max-width: 600px) {
+    max-width: 320px;
+  }
+  .hours-wrapper, .minutes-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    .text {
+      font-weight: 600;
+      font-size: 18px;
+    }
+  }
+  .colon {
+    font-size: 80px;
     font-weight: 600;
-    &.hour {
-      padding-right: 32px;
+    padding: 0 16px;
+
+    @media (max-width: 600px) {
+      font-size: 54px;
+    }
+  }
+  .hours, .minutes {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    background: rgb(255,255,255);
+    background: linear-gradient(101deg, rgba(255,255,255,1) 0%, rgba(229,237,252,1) 175%);
+    position: relative;
+    padding: 32px;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+    @media (max-width: 600px) {
+      padding: 8px;
     }
   }
   input[type=tel] {
-    display: block;
+    display: flex;
     font-size: 80px;
     outline: none;
     background: none;
     border: none;
-    max-width: 90px;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+
+    @media (max-width: 600px) {
+      font-size: 54px;
+    }
   }
+}
+.guide {
+  cursor: pointer;
+  font-weight: 600;
+  color: #8F8F8F;
+  text-decoration: underline;
+  display: table-cell;
+  margin-right: auto;
 }
 </style>

@@ -98,7 +98,7 @@ export default {
     onLoad () {
       setTimeout(() => {
         this.setLoaded(true)
-      }, 1500)
+      }, 2000)
     },
   },
 

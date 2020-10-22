@@ -29,10 +29,6 @@ export default {
 
 <style lang="scss" scoped>
 .prev-wrapper {
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
   padding: 0 16px 0 0;
   button {
     display: flex;
@@ -41,8 +37,8 @@ export default {
     color: #333;
     font-weight: 600;
     cursor: pointer;
-    transform: rotate(3deg);
-    padding: 28px 30px;
+    transform: rotate(2deg);
+    padding: 26px 24px 26px 18px;
     border: none;
     position: relative;
     background: none;
@@ -56,7 +52,7 @@ export default {
     }
     &:before {
       border-radius: 14px;
-      transform: skewX(-13deg);
+      transform: skewX(-10deg);
       background: #fff;
       background: linear-gradient(130deg, rgb(255, 255, 255) 0%, rgba(251, 251, 251, 1) 90%);
       z-index: -1;
@@ -72,7 +68,7 @@ export default {
       background: rgb(202,125,232);
       background: linear-gradient(122deg, rgb(255, 255, 255) 0%, rgba(251, 251, 251, 1) 100%);
       border-radius: 14px;
-      transform: skewX(13deg);
+      transform: skewX(10deg);
       z-index: -1;
       content: '';
       display: block;

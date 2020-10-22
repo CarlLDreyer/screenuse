@@ -66,14 +66,13 @@ export default {
 <style lang="scss" scoped>
 .emoji-cards {
   display: grid;
-  margin: 32px 0 0 0;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 
-  @media (max-width: 1080px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
-  @media (max-width: 780px) {
+  @media (max-width: 600px) {
     grid-template-columns: 1fr 1fr;
   }
   .emoji-card {
@@ -82,11 +81,17 @@ export default {
     justify-content: center;
     align-items: center;
     background: white;
-    padding: 32px 42px;
+    padding: 32px 0;
+    min-width: 100px;
     border-radius: 4px;
-    margin: 8px;
+    margin: 4px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     cursor: pointer;
+
+    @media (max-width: 600px) {
+      padding: 16px 0;
+      margin: 4px;
+    }
     &.selected {
       background: rgb(202,125,232);
       background: linear-gradient(101deg, rgba(202,125,232,1) 0%, rgba(236,203,245,1) 175%);
@@ -98,11 +103,20 @@ export default {
       height: 54px;
       width: 54px;
       margin-bottom: 8px;
+
+      @media (max-width: 600px) {
+        height: 40px;
+        width: 40px;
+        margin-bottom: 4px;
+      }
     }
     .title {
       font-weight: 600;
       font-size: 22px;
-      color: #06071b;
+
+      @media (max-width: 600px) {
+        font-size: 16px;
+      }
     }
   }
 }

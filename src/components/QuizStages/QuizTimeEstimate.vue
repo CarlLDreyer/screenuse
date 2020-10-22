@@ -1,18 +1,20 @@
 <template>
   <QuizLayout :title="title" :subtitle="subtitle">
     <template #content>
-      <span class="time-text">{{ estimatedTime }}h</span>
-      <vue-slider
-        v-model="timeModel"
-        :height="18"
-        :min="0"
-        :max="12"
-        tooltip="none"
-      >
-        <template v-slot:dot>
-          <img :src="imgUrl" class="poop-dot"/>
-        </template>
-      </vue-slider>
+      <div class="slider">
+        <span class="time-text">{{ estimatedTime }}h</span>
+        <vue-slider
+          v-model="timeModel"
+          :height="18"
+          :min="0"
+          :max="12"
+          tooltip="none"
+        >
+          <template v-slot:dot>
+            <img :src="imgUrl" class="poop-dot"/>
+          </template>
+        </vue-slider>
+      </div>
     </template>
     <template #footer>
       <NextButton />
@@ -67,11 +69,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.time-text {
-  font-weight: 700;
-  font-size: 72px;
-}
-::v-deep .quiz-content {
-  margin-top: 32px;
+.slider {
+  .time-text {
+    font-weight: 700;
+    font-size: 72px;
+  }
 }
 </style>

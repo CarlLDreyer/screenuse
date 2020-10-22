@@ -74,18 +74,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .quiz-content {
-  display: flex;
-  justify-content: center;
+::v-deep .quiz-body {
   align-items: center;
 }
 .checkboxes {
-  margin: 32px 0 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
 
-  @media (max-width: 780px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
+    max-width: 600px;
   }
   .checkbox {
     background: rgb(255,255,255);
@@ -97,20 +95,19 @@ export default {
     border-radius: 4px;
     font-size: 18px;
     padding: 20px 24px;
-    margin: 4px;
-    color: #06071b;
-    
+    margin: 2px;
+
+    @media (max-width: 600px) {
+      font-size: 16px;
+      padding: 16px 16px;
+    }
     &.selected {
       color: white;
       background: rgb(202,125,232);
       background: linear-gradient(101deg, rgba(202,125,232,1) 0%, rgba(236,203,245,1) 175%);
     }
-
-    @media (max-width: 780px) {
-      font-size: 18px;
-      padding: 16px 16px;
-    }
     .text {
+      font-weight: 600;
       padding: 0 24px 0 0;
       user-select: none;
     }
@@ -118,9 +115,14 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 24px;
-      width: 24px;
+      height: 20px;
+      width: 20px;
       border-radius: 50%;
+
+      @media (max-width: 600px) {
+        height: 16px;
+        width: 16px;
+      }
     }
     .empty-box {
       border: 2px solid #ccd8e9;
@@ -129,8 +131,8 @@ export default {
       background: #b06eca;
       border: 2px solid #b06eca;
       svg {
-        height: 16px;
-        width: 16px;
+        height: 14px;
+        width: 14px;
         fill: none;
         stroke: white;
         stroke-width: 3;

@@ -1,6 +1,6 @@
 <template>
-  <div class="next-wrapper">
-    <button @click="nextQuizStage" :class="{disabled: disabled}">
+  <div class="result-wrapper">
+    <button @click="finishQuiz" :class="{disabled: disabled}">
       Se Resultat
       <svg viewBox="0 0 24 24"><use xlink:href="#arrow" /></svg>
     </button>
@@ -21,8 +21,12 @@ export default {
 
   methods: {
     ...mapActions([
-      'nextQuizStage',
-    ])
+      'setQuizFinished',
+    ]),
+    finishQuiz () {
+      this.setQuizFinished(true)
+      this.$router.push('results')
+    },
   },
 
   props: {
@@ -35,16 +39,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.next-wrapper {
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+.result-wrapper {
   padding: 0 0 0 16px;
 
-  @media (max-width: 768px) {
-    padding: 0 0 0 16px;
-  }
   button {
     display: flex;
     justify-content: center;
@@ -52,8 +49,8 @@ export default {
     color: white;
     font-weight: 600;
     cursor: pointer;
-    transform: rotate(-3deg);
-    padding: 28px 30px;
+    transform: rotate(-2deg);
+    padding: 26px 18px 26px 24px;
     border: none;
     position: relative;
     background: none;
@@ -77,7 +74,7 @@ export default {
     }
     &:before {
       border-radius: 14px;
-      transform: skewX(13deg);
+      transform: skewX(10deg);
       background: rgba(176,110,202,1);
       background: linear-gradient(130deg, rgba(202,125,232,1) 0%, rgba(176,110,202,1) 90%);
       z-index: -1;
@@ -93,7 +90,7 @@ export default {
       background: rgb(202,125,232);
       background: linear-gradient(122deg, rgba(202,125,232,1) 0%, rgba(176,110,202,1) 100%);
       border-radius: 14px;
-      transform: skewX(-13deg);
+      transform: skewX(-10deg);
       z-index: -1;
       content: '';
       display: block;

@@ -1,11 +1,11 @@
 <template>
-  <div class="quiz-wrapper">
-    <div class="quiz-container">
+  <div class="quiz-container">
+    <div class="quiz-header">
       <h1>{{ title }}</h1>
       <h2>{{ subtitle }}</h2>
-      <div class="quiz-content">
-        <slot name="content" />
-      </div>
+    </div>
+    <div class="quiz-body">
+      <slot name="content" />
     </div>
     <div class="quiz-footer">
       <slot name="footer" />
@@ -31,31 +31,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.quiz-wrapper {
+.quiz-container {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin: 0 auto;
+  max-width: 1024px;
+  padding: 0 16px;
 
-  @media (max-width: 780px) {
-    justify-content: flex-start;
-  }
-  .quiz-container {
+  .quiz-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     text-align: center;
-    color: #06071b;
-    padding: 0 16px;
-
-    @media (max-width: 780px) {
-      font-size: 30px;
-    }
+    margin: 32px 0 16px 0;
+    animation: fadeInLeft;
+    animation-duration: .75s;
     h1 {
       font-weight: 700;
       font-size: 36px;
       margin-bottom: 8px;
       line-height: 1;
 
-      @media (max-width: 780px) {
+      @media (max-width: 600px) {
         font-size: 30px;
         text-align: left;
       }
@@ -67,26 +67,35 @@ export default {
       line-height: 1;
       font-size: 22px;
 
-      @media (max-width: 780px) {
+      @media (max-width: 600px) {
         text-align: left;
+        font-size: 20px;
       }
     }
-    .quiz-content {
-      width: 100%;
-    }
+  }
+  .quiz-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    color: #06071b;
+    padding: 16px 0;
+    animation: fadeInLeft;
+    animation-delay: .25s;
+    animation-fill-mode: backwards;
+    animation-duration: .75s;
   }
   .quiz-footer {
     display: flex;
-    position: fixed;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: flex-end;
     width: 100%;
-    bottom: 0;
-    margin: 0 54px 24px 0;
-
-    @media (max-width: 780px) {
-      justify-content: center;
-      margin: 0 0 24px 0;
-    }
+    animation: fadeInUp;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-fill-mode: backwards;
+    padding: 16px 0;
   }
 }
 </style>

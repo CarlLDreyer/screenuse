@@ -1,8 +1,9 @@
 <template>
-  <div class="quiz">
+  <div class="quiz-wrapper">
     <div id="wave" />
-    <div class="quiz-body">
-      <Component :is="quizStage"></Component>
+    <div class="notifications" />
+    <div class="quiz">
+      <Component :is="quizStage" />
     </div> 
   </div>
 </template>
@@ -24,16 +25,25 @@ export default {
       'currentQuizStage',
     ]),
     quizStage () {
+      // const quizComponents = [
+      //   'QuizTimeEstimate',
+      //   'QuizPhoneBehavior',
+      //   'QuizWellbeing',
+      //   'QuizPhoneUsage',
+      //   'QuizExercise',
+      //   'QuizActualTime',
+      // ]
       const quizComponents = [
-        'QuizTimeEstimate',
-        'QuizPhoneBehavior',
-        'QuizWellbeing',
-        'QuizPhoneUsage',
-        'QuizExercise',
-        'QuizActualTime',
+        'QuizActualTime'
       ]
       return quizComponents[this.currentQuizStage]
     },
+  },
+
+  watch: {
+    currentQuizStage () {
+      window.scrollTo(0,0)
+    }
   },
 
   components: {
@@ -48,9 +58,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.quiz {
+.quiz-wrapper {
   height: 100%;
-  .quiz-body {
+  .notifications {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: url('/img/notifications.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    top: 0;
+    z-index: 0;
+
+    @media (max-width: 1024px) {
+      display: none;
+    }
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .quiz {
     height: 100%;
     position: relative;
     z-index: 2021;

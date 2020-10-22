@@ -7,7 +7,7 @@
           <span id="header" class="text">Skärmtid?</span>
           <span id="desc" class="text">Problemet är inte att vi har lite tid, utan att vi slösar bort en stor del av tiden vi har. Hur spenderar du din tid?</span>
           <button id="start-btn" @click="handleClick">
-            STARTA QUIZ
+            {{ startText }}
             <span id="btn-icon">
               <svg viewBox="0 0 24 24"><use xlink:href="#arrow" /></svg>
             </span>
@@ -27,8 +27,18 @@
 
 <script>
 import ObjectCanvas from '@/components/3d/ObjectCanvas'
+import { mapGetters } from 'vuex'
 export default {
   name: 'ScreenUse',
+
+  computed: {
+    ...mapGetters([
+      'currentQuizStage',
+    ]),
+    startText () {
+      return this.currentQuizStage > 0 ? 'ÅTERUPTA' : 'STARTA QUIZ'
+    },
+  },
 
   components: {
     ObjectCanvas,
