@@ -41,7 +41,8 @@ export default {
       if (newValue > 24 && oldValue < 24) this.setActualHours(oldValue)
     },
     minutesModel (newValue, oldValue) {
-      if (newValue > 59 && oldValue < 59) this.setActualMinutes(oldValue)
+      if (this.actualHours === '24') this.setActualMinutes('0')
+      else if (newValue > 59 && oldValue < 59) this.setActualMinutes(oldValue)
     },
   },
 

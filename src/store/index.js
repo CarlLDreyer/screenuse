@@ -170,13 +170,13 @@ export const store = new Vuex.Store({
     ],
     currentResultStage: 0,
     yearBoxes: [
-      { id: 0, type: 'sleep' }, { id: 1, type: 'sleep' }, { id: 2, type: 'sleep' }, { id: 3, type: 'sleep' }, { id: 4, type: 'sleep' },
-      { id: 6, type: 'sleep' }, { id: 7, type: 'sleep' }, { id: 8, type: 'sleep' }, { id: 9, type: 'sleep' }, { id: 10, type: 'sleep' },
-      { id: 11, type: 'sleep' }, { id: 12, type: 'sleep' }, { id: 13, type: 'sleep' }, { id: 14, type: 'sleep' }, { id: 15, type: 'sleep' },
-      { id: 16, type: 'sleep' }, { id: 17, type: 'sleep' }, { id: 18, type: 'sleep' }, { id: 19, type: 'sleep' }, { id: 20, type: 'sleep' },
-      { id: 21, type: 'sleep' }, { id: 22, type: 'sleep' }, { id: 23, type: 'work' }, { id: 24, type: 'work' }, { id: 25, type: 'work' },
-      { id: 26, type: 'work' }, { id: 27, type: 'work' }, { id: 28, type: 'work' }, { id: 29, type: 'work' }, { id: 30, type: 'work' },
-      { id: 31, type: 'work' }, { id: 32, type: 'work' }, { id: 33, type: 'work' }, { id: 34, type: 'work' }, { id: 35, type: 'work' },
+      { id: 0, type: 'year' }, { id: 1, type: 'year' }, { id: 2, type: 'year' }, { id: 3, type: 'year' }, { id: 4, type: 'year' },
+      { id: 6, type: 'year' }, { id: 7, type: 'year' }, { id: 8, type: 'year' }, { id: 9, type: 'year' }, { id: 10, type: 'year' },
+      { id: 11, type: 'year' }, { id: 12, type: 'year' }, { id: 13, type: 'year' }, { id: 14, type: 'year' }, { id: 15, type: 'year' },
+      { id: 16, type: 'year' }, { id: 17, type: 'year' }, { id: 18, type: 'year' }, { id: 19, type: 'year' }, { id: 20, type: 'year' },
+      { id: 21, type: 'year' }, { id: 22, type: 'year' }, { id: 23, type: 'year' }, { id: 24, type: 'year' }, { id: 25, type: 'year' },
+      { id: 26, type: 'year' }, { id: 27, type: 'year' }, { id: 28, type: 'year' }, { id: 29, type: 'year' }, { id: 30, type: 'year' },
+      { id: 31, type: 'year' }, { id: 32, type: 'year' }, { id: 33, type: 'year' }, { id: 34, type: 'year' }, { id: 35, type: 'year' },
       { id: 36, type: 'year' }, { id: 37, type: 'year' }, { id: 38, type: 'year' }, { id: 39, type: 'year' }, { id: 40, type: 'year' },
       { id: 41, type: 'year' }, { id: 42, type: 'year' }, { id: 43, type: 'year' }, { id: 44, type: 'year' }, { id: 45, type: 'year' },
       { id: 46, type: 'year' }, { id: 47, type: 'year' }, { id: 48, type: 'year' }, { id: 49, type: 'year' }, { id: 50, type: 'year' },
@@ -188,6 +188,7 @@ export const store = new Vuex.Store({
       { id: 76, type: 'year' }, { id: 77, type: 'year' }, { id: 78, type: 'year' }, { id: 79, type: 'year' }, { id: 80, type: 'year' },
       { id: 81, type: 'year' }, { id: 82, type: 'year' }, { id: 83, type: 'year' }, { id: 84, type: 'year' }, { id: 85, type: 'year' },
     ],
+    yearsInLifeTime: 0,
   },
   mutations: {
     setIsLoaded (state, isLoaded) {
@@ -238,6 +239,14 @@ export const store = new Vuex.Store({
     nextResultStage (state) {
       state.currentResultStage++
     },
+    updateBoxData (state, payload) {
+      state.yearBoxes.forEach((item, index) => {
+        if (index >= payload.minIndex && index <= payload.maxIndex) item.type = payload.newValue
+      })
+    },
+    yearsInLifeTime (state) {
+      state.yearsInLifeTime = Math.round((state.actualHoursPerDay / 24) * 50)
+    }
   },
   getters: {
     isLoaded: state => state.isLoaded,
@@ -257,6 +266,7 @@ export const store = new Vuex.Store({
     resultData: state => state.resultData,
     currentResultStage: state => state.currentResultStage,
     yearBoxes: state => state.yearBoxes,
+    yearsInLifeTime: state => state.yearsInLifeTime,
   },
   actions: {
     setLoaded ({commit}, isLoaded) {
@@ -292,9 +302,13 @@ export const store = new Vuex.Store({
     setQuizFinished ({commit}, isQuizFinished) {
       commit('setQuizFinished', isQuizFinished)
       commit('setResultsData')
+      commit('yearsInLifeTime')
     },
     nextResultStage ({commit}) {
       commit('nextResultStage')
     },
+    updateBoxData ({commit}, payload) {
+      commit('updateBoxData', payload)
+    }
   },
 })

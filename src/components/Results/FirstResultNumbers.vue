@@ -26,7 +26,7 @@ export default {
     return {
       screenTime: 'Din skärmtid motsvarar:',
       bubbleSource: '/img/results/bubbla.svg',
-      isAnimationDone: true, // Change to true later
+      isAnimationDone: false, // Change to false later
     }
   },
 
@@ -39,8 +39,8 @@ export default {
       'nextResultStage',
     ]),
     animateNumbers () {
-      let t1 = anime.timeline({
-        easing: 'easeInOutElastic'
+      let animTimeline = anime.timeline({
+        easing: 'easeInOutElastic',
       }).add({
         targets: '.result-0',
         keyframes: [
@@ -135,13 +135,12 @@ export default {
         ],
       }, '-=750')
 
-      t1.finished.then(() => {
+      animTimeline.finished.then(() => {
         this.isAnimationDone = true
         setTimeout(() => {
            this.nextResultStage()
-        }, 500) // Change to 3000?
+        }, 3000) // Change to 3000?
       })
-      console.log(t1)
     },
   },
 
