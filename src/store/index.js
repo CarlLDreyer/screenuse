@@ -325,6 +325,7 @@ export const store = new Vuex.Store({
     },
     resetQuizState ({commit}) {
       commit('resetState')
+      commit('setIsLoaded', true)
     }
   },
 })

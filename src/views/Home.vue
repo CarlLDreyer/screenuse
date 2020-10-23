@@ -58,7 +58,7 @@ export default {
   }
   button {
     background: #E9ECF0;
-    padding: 12px 36px;
+    padding: 16px 36px;
     font-weight: 700;
     border-radius: 4px;
     outline: 0;
@@ -67,6 +67,7 @@ export default {
     transition: all .1s ease;
     animation: fadeInUp;
     animation-duration: 1s;
+    cursor: pointer;
     &:hover {
       background: #D7D7D7;
     }

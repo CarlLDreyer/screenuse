@@ -163,7 +163,6 @@ export default {
 
 
       animTimeline.finished.then(() => {
-        this.isAnimationDone = true
         setTimeout(() => {
            this.nextResultStage()
         }, 5000)

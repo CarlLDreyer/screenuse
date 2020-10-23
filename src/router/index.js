@@ -38,7 +38,6 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const quiz = store.getters.isQuizFinished
-  console.log('quiz', quiz)
 
   if (to.name === 'Results' && !quiz) next('/screentime/quiz')
   else next()

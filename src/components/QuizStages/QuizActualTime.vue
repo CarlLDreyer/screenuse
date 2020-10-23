@@ -59,10 +59,6 @@ export default {
       'setActualHours',
       'setActualMinutes',
     ]),
-    handleKeypress (evt) {
-      const value = evt.value
-      console.log('key pressed', value)
-    }
   },
 
   computed: {
