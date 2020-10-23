@@ -7,18 +7,26 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'Home',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+  },
+  {
+    path: '/screentime',
     name: 'ScreenUse',
     component: () => import(/* webpackChunkName: "about" */ '../views/ScreenUse.vue')
   },
   {
-    path: '/quiz',
+    path: '/screentime/quiz',
     name: 'Quiz',
     component: () => import(/* webpackChunkName: "about" */ '../views/Quiz.vue')
   },
   {
-    path: '/results',
+    path: '/screentime/results',
     name: 'Results',
     component: () => import(/* webpackChunkName: "about" */ '../views/Results.vue')
+  },
+  { path: '*', 
+    redirect: '/'
   },
 ]
 
@@ -32,7 +40,7 @@ router.beforeEach((to, from, next) => {
   const quiz = store.getters.isQuizFinished
   console.log('quiz', quiz)
 
-  if (to.name === 'Results' && !quiz) next('/quiz')
+  if (to.name === 'Results' && !quiz) next('/screentime/quiz')
   else next()
 })
 

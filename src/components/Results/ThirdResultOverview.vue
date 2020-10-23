@@ -88,7 +88,7 @@ export default {
 
       animTimeline.finished.then(() => {
         this.resetQuizState()
-        this.$router.push('/')
+        this.$router.push('/screentime')
       })
     },
   },

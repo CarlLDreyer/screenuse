@@ -46,7 +46,7 @@ export default {
 
   methods: {
     handleClick () {
-      this.$router.push('quiz')
+      this.$router.push('/screentime/quiz')
     },
   },
 
