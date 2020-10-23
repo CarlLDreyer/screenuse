@@ -6,9 +6,9 @@
           <span id="small">Har du koll på din</span>
           <span id="header" class="text">Skärmtid?</span>
           <span id="desc" class="text">Problemet är inte att vi har lite tid, utan att vi slösar bort en stor del av tiden vi har. Hur spenderar du din tid?</span>
-          <button id="start-btn" @click="handleClick">
+          <button class="arrow-btn" @click="handleClick">
             {{ startText }}
-            <span id="btn-icon">
+            <span class="btn-icon">
               <svg viewBox="0 0 24 24"><use xlink:href="#arrow" /></svg>
             </span>
           </button>
@@ -126,50 +126,6 @@ export default {
           margin: 0 0 16px 0;
           font-size: 20px;
           max-width: 90%;
-        }
-      }
-      #start-btn {
-        display: flex;
-        outline: none;
-        background: none;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        font-size: 18px;
-        font-weight: 600;
-        cursor: pointer;
-        max-width: 190px;
-        padding: 0;
-        letter-spacing: 0.6px;
-        color: #333;
-        transition: all .2s ease;
-        &:hover {
-          // letter-spacing: 1px;
-          color: rgb(176,110,202);
-          #btn-icon {
-            transform: translateX(5px);
-          }
-        }
-        #btn-icon {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: rgb(176,110,202);
-          background: linear-gradient(129deg, rgba(176,110,202,1) 0%, rgba(202,125,232,1) 100%);
-          border-radius: 50%;
-          height: 40px;
-          width: 40px;
-          margin: 0 0 0 16px;
-          transition: all .2s ease;
-          svg {
-            height: 18px;
-            width: 18px;
-            stroke: white;
-            fill: none;
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-          }
         }
       }
     }

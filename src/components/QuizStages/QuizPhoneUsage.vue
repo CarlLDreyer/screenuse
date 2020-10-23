@@ -137,6 +137,7 @@ export default {
     img {
       height: 58px;
       width: 58px;
+      user-select: none;
 
       @media (max-width: 600px) {
         height: 54px;

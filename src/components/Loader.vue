@@ -18,7 +18,7 @@ export default {
       'isLoaded',
     ]),
     shouldLoad () {
-      return this.$route.name === 'ScreenUse' && !this.isLoaded
+      return (this.$route.name === 'ScreenUse' || this.$route.name === 'Results') && !this.isLoaded
     },
   },
 }

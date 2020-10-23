@@ -21,20 +21,16 @@ export default {
 
   computed: {
     ...mapGetters([
-      'isLoaded',
       'currentQuizStage',
     ]),
     quizStage () {
-      // const quizComponents = [
-      //   'QuizTimeEstimate',
-      //   'QuizPhoneBehavior',
-      //   'QuizWellbeing',
-      //   'QuizPhoneUsage',
-      //   'QuizExercise',
-      //   'QuizActualTime',
-      // ]
       const quizComponents = [
-        'QuizActualTime'
+        'QuizTimeEstimate',
+        'QuizPhoneBehavior',
+        'QuizWellbeing',
+        'QuizPhoneUsage',
+        'QuizExercise',
+        'QuizActualTime',
       ]
       return quizComponents[this.currentQuizStage]
     },

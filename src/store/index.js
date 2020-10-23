@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export const store = new Vuex.Store({
-  state: {
+const defaultState = () => {
+  return {
     isLoaded: false,
     currentQuizStage: 0,
     estimatedTime: 2,
@@ -189,7 +189,11 @@ export const store = new Vuex.Store({
       { id: 81, type: 'year' }, { id: 82, type: 'year' }, { id: 83, type: 'year' }, { id: 84, type: 'year' }, { id: 85, type: 'year' },
     ],
     yearsInLifeTime: 0,
-  },
+  }
+}
+
+export const store = new Vuex.Store({
+  state: defaultState(),
   mutations: {
     setIsLoaded (state, isLoaded) {
       state.isLoaded = isLoaded
@@ -236,6 +240,9 @@ export const store = new Vuex.Store({
       state.resultData[2].value = Math.round((state.actualHoursPerDay * 365) / 12)
       state.resultData[3].value = Math.round(state.actualHoursPerDay * 7) 
     },
+    resetResultStage (state) {
+      state.currentResultStage = 0
+    },
     nextResultStage (state) {
       state.currentResultStage++
     },
@@ -246,6 +253,9 @@ export const store = new Vuex.Store({
     },
     yearsInLifeTime (state) {
       state.yearsInLifeTime = Math.round((state.actualHoursPerDay / 24) * 50)
+    },
+    resetState (state) {
+      Object.assign(state, defaultState())
     }
   },
   getters: {
@@ -307,8 +317,14 @@ export const store = new Vuex.Store({
     nextResultStage ({commit}) {
       commit('nextResultStage')
     },
+    resetResultStage ({commit}) {
+      commit('resetResultStage')
+    },
     updateBoxData ({commit}, payload) {
       commit('updateBoxData', payload)
+    },
+    resetQuizState ({commit}) {
+      commit('resetState')
     }
   },
 })

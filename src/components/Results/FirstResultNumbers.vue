@@ -1,9 +1,7 @@
 <template>
   <div class="numbers-wrapper">
-    <div class="splash" v-if="isAnimationDone">
-      <span class="splash-text">En människa har en <br>genomsnittlig livslängd på: <strong>85 år</strong></span>
-    </div>
-    <div class="numbers" v-else>
+    <span class="splash-text">En människa har en <br>genomsnittlig livslängd på: <strong>85 år</strong></span>
+    <div class="numbers">
       <span class="screen-time">{{ screenTime }}</span>
       <div class="number-bubble">
         <div class="number" v-for="result in resultData" :key="result.id" :class="`result-${result.id}`">
@@ -24,29 +22,41 @@ export default {
   
   data () {
     return {
-      screenTime: 'Din skärmtid motsvarar:',
+      screenTime: 'Din skärmtid motsvarar',
       bubbleSource: '/img/results/bubbla.svg',
-      isAnimationDone: false, // Change to false later
     }
   },
 
   mounted () {
-    this.animateNumbers()
+    this.loadAssets()
   },
 
   methods: {
     ...mapActions([
       'nextResultStage',
+      'setLoaded',
     ]),
+    loadAssets () {
+      this.setLoaded(false)
+      setTimeout(() => {
+        this.setLoaded(true)
+        this.animateNumbers()
+      }, 2000)
+    },
     animateNumbers () {
       let animTimeline = anime.timeline({
         easing: 'easeInOutElastic',
       }).add({
+        targets: '.numbers',
+        opacity: 1,
+        duration: 500,
+        easing: 'linear'
+      })
+      .add({
         targets: '.result-0',
         keyframes: [
           { translateX: 300, opacity: 0, scale: 0.3 },
-          { translateX: 300, opacity: 0.5, scale: 0.5},
-          { translateX: 300, duration: 250 },
+          { translateX: 300, opacity: 0.5, scale: 0.5 },
           { translateX: 0, opacity: 1, scale: 1, duration: 750 },
         ],
       })
@@ -57,19 +67,20 @@ export default {
           { translateX: 300, opacity: 0.5, scale: 0.5, duration: 1000},
           { translateX: 300, duration: 250 },
         ],
-      }, '-=750')
+      }, '-=1000')
       .add({ 
         targets: '.result-0',
-        keyframes: [
-          { translateX: -300, opacity: 0.5, scale: 0.5, duration: 750 },
-        ],
+        translateX: -300,
+        opacity: 0.5,
+        scale: 0.5,
+        duration: 750,
       })
       .add({
         targets: '.result-1',
-        keyframes: [
-          { translateX: 0, opacity: 1, scale: 1 },
-        ],   
-      }, '-=500')
+        translateX: 0,
+        opacity: 1,
+        scale: 1,
+      }, '-=750')
       .add({
         targets: '.result-2',
         keyframes: [
@@ -77,7 +88,7 @@ export default {
           { translateX: 300, opacity: 0.5, scale: 0.5, duration: 1000},
           { translateX: 300, duration: 250 },
         ],   
-      }, '-=1000') 
+      }, '-=1250') 
       .add({
         targets: '.result-0',
         opacity: 0,
@@ -86,16 +97,17 @@ export default {
       })
       .add({
         targets: '.result-1',
-        keyframes: [
-          { translateX: -300, opacity: 0.5, scale: 0.5, duration: 750 },
-        ],
-      }, '-=750')
+        translateX: -300,
+        opacity: 0.5,
+        scale: 0.5,
+        duration: 750,
+      }, '-=1000')
       .add({
         targets: '.result-2',
-        keyframes: [
-          { translateX: 0, opacity: 1, scale: 1 },
-        ],   
-      }, '-=500')
+        translateX: 0,
+        opacity: 1,
+        scale: 1,
+      }, '-=1000')
       .add({
         targets: '.result-3',
         keyframes: [
@@ -103,7 +115,7 @@ export default {
           { translateX: 300, opacity: 0.5, scale: 0.5, duration: 1000},
           { translateX: 300, duration: 250 },
         ],   
-      }, '-=1000')
+      }, '-=1250')
       .add({
         targets: '.result-1',
         opacity: 0,
@@ -112,16 +124,17 @@ export default {
       })
       .add({
         targets: '.result-2',
-        keyframes: [
-          { translateX: -300, opacity: 0.5, scale: 0.5, duration: 750 },
-        ],
-      }, '-=750')
+        translateX: -300,
+        opacity: 0.5,
+        scale: 0.5,
+        duration: 750,
+      }, '-=1000')
       .add({
         targets: '.result-3',
-        keyframes: [
-          { translateX: 0, opacity: 1, scale: 1 },
-        ],   
-      }, '-=500')
+        translateX: 0,
+        opacity: 1,
+        scale: 1, 
+      }, '-=1000')
       .add({
         targets: '.result-2',
         opacity: 0,
@@ -131,15 +144,25 @@ export default {
       .add({
         targets: '.result-3',
         keyframes: [
-          { translateX: -300, opacity: 0, scale: 0.5, duration: 750 },
+          { translateX: -300, opacity: 0.5, scale: 0.5, duration: 750 },
+          { opacity: 0, duration: 500 },
         ],
-      }, '-=750')
+      }, '-=1000')
+      .add({
+        targets: '.numbers',
+        opacity: 0,
+        duration: 1000,
+      }, '-=250')
+      .add({
+        targets: '.splash-text',
+        keyframes: [
+          { opacity: 1, duration: 1500 },
+          { opacity: 0, duration: 1500, delay: 3000 }
+        ],
+      })
 
       animTimeline.finished.then(() => {
-        this.isAnimationDone = true
-        setTimeout(() => {
-           this.nextResultStage()
-        }, 3000) // Change to 3000?
+        this.nextResultStage()
       })
     },
   },
@@ -159,27 +182,20 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  .splash-text {
+    position: absolute;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 1.2;
+    padding: 0 8px;
+    opacity: 0;
 
-  .splash {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2020;
-    animation: fadeIn;
-    animation-duration: 3s;
-    .splash-text {
-      font-weight: 600;
-      font-size: 48px;
-      line-height: 1.2;
-      padding: 0 8px;
+    @media (max-width: 1024px) {
+      font-size: 36px;
+    }
 
-      @media (max-width: 1024px) {
-        font-size: 36px;
-      }
-
-      @media (max-width: 600px) {
-        font-size: 24px;
-      }
+    @media (max-width: 600px) {
+      font-size: 24px;
     }
   }
   .numbers {
@@ -190,6 +206,7 @@ export default {
     justify-content: center;
     align-items: center;
     position: relative;
+    opacity: 0;
     .screen-time {
       font-size: 32px;
       font-weight: 600;

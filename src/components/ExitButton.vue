@@ -1,46 +1,14 @@
 <template>
   <div class="result-wrapper">
-    <button @click="finishQuiz" :class="{disabled: disabled}">
-      Se Resultat
-      <svg viewBox="0 0 24 24"><use xlink:href="#arrow" /></svg>
+    <button :class="{disabled: disabled}" v-on="$listeners">
+      Avsluta
     </button>
-    <svg style="display:none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <defs>
-        <g id="arrow">
-          <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
-        </g>
-      </defs>
-    </svg>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'ResultButton',
-
-  computed: {
-    ...mapGetters([
-      'isQuizFinished',
-    ]),
-  },
-
-  methods: {
-    ...mapActions([
-      'setQuizFinished',
-      'setLoaded',
-      'resetResultStage',
-    ]),
-    finishQuiz () {
-      if (this.isQuizFinished) {
-        this.setQuizFinished (false)
-        this.resetResultStage()
-      }
-      this.setQuizFinished(true)
-      this.$router.push('results')
-    },
-  },
-
+  name: 'ExitButton',
   props: {
     disabled: {
       type: Boolean,
@@ -62,7 +30,7 @@ export default {
     font-weight: 600;
     cursor: pointer;
     transform: rotate(-2deg);
-    padding: 26px 18px 26px 24px;
+    padding: 26px 38px;
     border: none;
     position: relative;
     background: none;
@@ -77,11 +45,6 @@ export default {
       }
       &:after {
         background: #bfbfbf;
-      }
-    }
-    &:hover {
-      svg {
-        // transform: translateX(5px);
       }
     }
     &:before {
@@ -111,17 +74,6 @@ export default {
       right: 20px;
       bottom: 0;
       left: 0;
-    }
-    svg {
-      margin: 0 0 0 8px;
-      height: 22px;
-      width: 22px;
-      fill: none;
-      stroke: white;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transition: all .2s ease;
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Loader />
-    <keep-alive>
+    <keep-alive :include="['ScreenUse', 'Quiz']">
       <router-view></router-view>
     </keep-alive>
   </div>

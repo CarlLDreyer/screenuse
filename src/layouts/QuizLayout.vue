@@ -1,8 +1,10 @@
 <template>
   <div class="quiz-container">
+    <slot name="splash" />
     <div class="quiz-header">
       <h1>{{ title }}</h1>
-      <h2>{{ subtitle }}</h2>
+      <h2 v-if="subtitle">{{ subtitle }}</h2>
+      <slot name="subtitle" />
     </div>
     <div class="quiz-body">
       <slot name="content" />
@@ -24,7 +26,7 @@ export default {
     },
     subtitle: {
       type: String,
-      required: true,
+      required: false,
     }
   },
 }

@@ -73,6 +73,7 @@ export default {
   .time-text {
     font-weight: 700;
     font-size: 72px;
+    user-select: none;
   }
 }
 </style>

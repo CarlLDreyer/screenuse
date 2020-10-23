@@ -131,6 +131,7 @@ export default {
     font-size: 80px;
     font-weight: 600;
     padding: 0 16px;
+    user-select: none;
 
     @media (max-width: 600px) {
       font-size: 54px;
