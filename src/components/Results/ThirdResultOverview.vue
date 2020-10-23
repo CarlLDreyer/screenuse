@@ -32,7 +32,7 @@
       </svg>
     </template>
     <template #footer>
-      <ExitButton @click="handleClick" />
+      <ExitButton @click="handleClick" :disabled="quizClicked" />
     </template>
   </QuizLayout>
 </template>
@@ -53,6 +53,7 @@ export default {
         'Webbsidor och appar designas för att du ska fortsätta skrolla?',
         'Tjänster utformas medvetet så att användare blir beroende?',
       ],
+      quizClicked: false,
     }
   },
 
@@ -61,6 +62,7 @@ export default {
       'resetQuizState'
     ]),
     handleClick () {
+      this.quizClicked = true
       let animTimeline = anime.timeline({
         easing: 'linear',
       }).add({

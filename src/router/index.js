@@ -8,22 +8,25 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue'),
   },
   {
     path: '/screentime',
     name: 'ScreenUse',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ScreenUse.vue')
+    component: () => import(/* webpackChunkName: "screenuse" */ '../views/ScreenUse.vue'),
+    meta: {title: 'Screen Time'}
   },
   {
     path: '/screentime/quiz',
     name: 'Quiz',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Quiz.vue')
+    component: () => import(/* webpackChunkName: "quiz" */ '../views/Quiz.vue'),
+    meta: {title: 'Screen Time | Quiz'}
   },
   {
     path: '/screentime/results',
     name: 'Results',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Results.vue')
+    component: () => import(/* webpackChunkName: "results" */ '../views/Results.vue'),
+    meta: {title: 'How did it go?'}
   },
   { path: '*', 
     redirect: '/'
@@ -38,7 +41,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const quiz = store.getters.isQuizFinished
-
+  if (to.meta.title) document.title = to.meta.title
   if (to.name === 'Results' && !quiz) next('/screentime/quiz')
   else next()
 })

@@ -40,12 +40,6 @@ export default {
 
     &.disabled {
       pointer-events: none;
-      &:before {
-        background: #bfbfbf;
-      }
-      &:after {
-        background: #bfbfbf;
-      }
     }
     &:before {
       border-radius: 14px;

@@ -39,11 +39,11 @@ export default {
   text-align: center;
   background: #fff;
   h2 {
-    font-size: 16px;
+    font-size: 18px;
     animation: fadeIn;
     animation-duration: 1s;
     @media (max-width: 768px) {
-      font-size: 12px;
+      font-size: 14px;
     }
   }
   h1 {
@@ -59,6 +59,7 @@ export default {
   button {
     background: #E9ECF0;
     padding: 16px 36px;
+    font-size: 16px;
     font-weight: 700;
     border-radius: 4px;
     outline: 0;
